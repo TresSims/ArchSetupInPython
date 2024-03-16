@@ -1,0 +1,72 @@
+{
+ # Basic computer settings to be configured
+ "settings": {
+    # Empty values will skip configuring the option
+    "keymap": "us",                 # Find available keymaps using `localectl list-keymaps`
+    "console_font": "lat9-16",             # Find available fonts in /usr/share/kbd/consolefonts/
+    "aur_helper": "yay",            # Currently, only `yay` is supported
+    "bootloader": "grub",           # Currently supported options are GRUB
+    "wifi": "none",                 # Supports "none" for wired connection, "prompt", to ask for wifi ssid and password, providing the ssid will prompt just for the password
+    "hostname": "example",          # Hostname of the system 
+    "time_zone": "America/New_York" # Timezone for new system
+ },
+
+ # A list of disks to format, by name
+ "disks": [
+    {
+      "label": "/dev/sda",
+      "partitions": [
+        {
+          "size": "1m",
+          "format": ""
+        },
+        {
+          "size": "4g",
+          "format": "swap"
+        },
+        {
+          "size": ""
+          "format": "ext4"
+        },
+      ],
+    },
+  ],
+  
+  "pacstrap": [
+    "base",
+    "base-devel",
+    "linux",
+    "linux-firmware"
+  ],
+
+ "groups": {
+    "vm": {
+      "scripts": [
+        {
+          "location": "",
+          "language": "sh"
+        }
+      ],
+      "packages": {
+        "aur": [
+          "open-vm-tools",
+        ],
+        "base": []
+      }
+    },
+    "base": {
+      "packages": {
+        "aur": [],
+        "base": [],
+      }
+    }
+ },
+
+  "daemons": {
+    "manager": "systemctl",
+    "services": [
+      "dhcpd",
+      "docker"
+    ]
+  }
+}
